@@ -6,9 +6,13 @@
 const axios = require('axios')
 const crypto = require('crypto')
 
-exports.sourceNodes = async ({ boundActionCreators }) => {
-  const { createNode } = boundActionCreators
+const buildContentDigest = content =>
+  crypto
+    .createHash(`md5`)
+    .update(JSON.stringify(content))
+    .digest(`hex`)
 
+const createTopStoriesSource = async ({ createNode }) => {
   const res = await axios.get(
     `https://hacker-news.firebaseio.com/v0/topstories.json`
   )
@@ -42,15 +46,31 @@ exports.sourceNodes = async ({ boundActionCreators }) => {
       item: itemsMap.get(storyId),
     }
 
-    // Get content digest of node. (Required field)
-    const contentDigest = crypto
-      .createHash(`md5`)
-      .update(JSON.stringify(storyIdNode))
-      .digest(`hex`)
-    // add it to userNode
-    storyIdNode.internal.contentDigest = contentDigest
+    storyIdNode.internal.contentDigest = buildContentDigest(storyIdNode)
 
     // Create node with the gatsby createNode() API
     createNode(storyIdNode)
   })
+}
+
+const createBuildMetadataSource = ({ createNode }) => {
+  const buildMetadataNode = {
+    // There is only one record
+    id: `I am the build metadata source id`,
+    parent: null,
+    internal: { type: `BuildMetadata` },
+    children: [],
+    // Unix time format to be consistent with HackerNews API date format
+    buildDate: new Date().getTime() / 1000,
+  }
+
+  buildMetadataNode.internal.contentDigest = buildContentDigest(
+    buildMetadataNode
+  )
+  createNode(buildMetadataNode)
+}
+
+exports.sourceNodes = async ({ boundActionCreators }) => {
+  await createBuildMetadataSource(boundActionCreators)
+  await createTopStoriesSource(boundActionCreators)
 }
