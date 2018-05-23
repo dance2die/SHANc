@@ -8,6 +8,7 @@ injectGlobal`
   body {
     margin: 0;
     font-family: 'Khula';
+    letter-spacing: 0.05rem;
   }
 `
 
