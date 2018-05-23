@@ -29,13 +29,18 @@ const linkStyle = {
   textDecoration: 'none',
 }
 
-const Container = styled.div`
+const BuildInfoContainer = styled.div`
   margin: 10px auto -10px;
   width: 100%;
   font-size: 0.75rem;
   color: #ffe;
+  display: flex;
+  flex-wrap: wrap;
 `
 
+const GenerateTime = styled.span`
+  margin-right: 5px;
+`
 const BuildTime = styled.span`
   color: black;
 `
@@ -56,12 +61,12 @@ const BuildInfo = ({ metadata }) => {
   }
 
   return (
-    <Container>
-      Generated {moment(builtOn).fromNow()}{' '}
+    <BuildInfoContainer>
+      <GenerateTime>Generated {moment(builtOn).fromNow()} </GenerateTime>
       <BuildTime>
         ({builtOn.toLocaleDateString('en-US', localeOptions)})
       </BuildTime>
-    </Container>
+    </BuildInfoContainer>
   )
 }
 
@@ -73,8 +78,10 @@ const Header = ({ siteTitle, description, metadata }) => (
           {siteTitle}
         </Link>
       </Title>
-      <DescriptionContainer>{description}</DescriptionContainer>
-      <BuildInfo metadata={metadata} />
+      <DescriptionContainer>
+        {description}
+        <BuildInfo metadata={metadata} />
+      </DescriptionContainer>
     </TitleContainer>
   </HeaderContainer>
 )
