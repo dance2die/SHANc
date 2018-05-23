@@ -27,7 +27,29 @@ const linkStyle = {
   textDecoration: 'none',
 }
 
-const Header = ({ siteTitle, description }) => (
+const Container = styled.div`
+  margin: 0 auto;
+  padding: 15px 0 0 0;
+  width: 100%;
+  font-size: 0.75rem;
+  color: #ffe;
+`
+
+const BuildTime = styled.span`
+  color: black;
+`
+
+const BuildInfo = ({ metadata }) => {
+  const { buildDate } = metadata
+  const builtOn = new Date(buildDate * 1000)
+  return (
+    <Container>
+      Generated on <BuildTime>{builtOn.toUTCString()}</BuildTime>
+    </Container>
+  )
+}
+
+const Header = ({ siteTitle, description, metadata }) => (
   <HeaderContainer>
     <TitleContainer>
       <Title>
@@ -36,6 +58,7 @@ const Header = ({ siteTitle, description }) => (
         </Link>
       </Title>
       <DescriptionContainer>{description}</DescriptionContainer>
+      <BuildInfo metadata={metadata} />
     </TitleContainer>
   </HeaderContainer>
 )

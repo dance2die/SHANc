@@ -26,8 +26,8 @@ const Layout = ({ children, data }) => (
     <Header
       siteTitle={data.site.siteMetadata.title}
       description={data.site.siteMetadata.description}
+      metadata={data.buildMetadata}
     />
-    <BuildInfo metadata={data.buildMetadata} />
     <Body>{children()}</Body>
   </div>
 )
