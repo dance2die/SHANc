@@ -5,7 +5,8 @@ import moment from 'moment'
 
 const HeaderContainer = styled.div`
   background: #ffc600;
-  margin-bottom: 1.45rem;
+  font-size: 1.5rem;
+  margin-bottom: 15px;
 `
 
 const TitleContainer = styled.div`
@@ -15,7 +16,7 @@ const TitleContainer = styled.div`
 `
 
 const Title = styled.h1`
-  margin: 0;
+  margin-bottom: -20px;
 `
 
 const DescriptionContainer = styled.p`
@@ -29,8 +30,7 @@ const linkStyle = {
 }
 
 const Container = styled.div`
-  margin: 0 auto;
-  padding: 15px 0 0 0;
+  margin: 10px auto -10px;
   width: 100%;
   font-size: 0.75rem;
   color: #ffe;

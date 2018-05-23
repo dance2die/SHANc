@@ -1,8 +1,15 @@
 import React from 'react'
 import Link from 'gatsby-link'
-import styled from 'styled-components'
+import styled, { injectGlobal } from 'styled-components'
 import parser from 'url'
 import moment from 'moment'
+
+injectGlobal`
+  body {
+    margin: 0;
+    font-family: 'Khula';
+  }
+`
 
 const Main = styled.div`
   margin: 0;
@@ -13,6 +20,7 @@ const Story = styled.div`
   align-items: center;
   justify-content: flex-start;
   padding: 4px 0;
+  line-height: 18px;
 `
 
 const Rank = styled.span`
