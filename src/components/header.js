@@ -1,6 +1,7 @@
 import React from 'react'
 import Link from 'gatsby-link'
 import styled from 'styled-components'
+import moment from 'moment'
 
 const HeaderContainer = styled.div`
   background: #ffc600;
@@ -44,7 +45,8 @@ const BuildInfo = ({ metadata }) => {
   const builtOn = new Date(buildDate * 1000)
   return (
     <Container>
-      Generated on <BuildTime>{builtOn.toUTCString()}</BuildTime>
+      Generated {moment(builtOn).fromNow()}{' '}
+      <BuildTime>({builtOn.toUTCString()})</BuildTime>
     </Container>
   )
 }
