@@ -16,7 +16,7 @@ const TitleContainer = styled.div`
 `
 
 const Title = styled.h1`
-  margin-bottom: -20px;
+  margin-bottom: 10px;
 `
 
 const DescriptionContainer = styled.p`

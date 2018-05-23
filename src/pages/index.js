@@ -7,7 +7,8 @@ import moment from 'moment'
 injectGlobal`
   body {
     margin: 0;
-    font-family: 'Khula';
+    /* font-family: 'Khula'; */
+    font-family: 'Verdana';
     letter-spacing: 0.05rem;
   }
 `
