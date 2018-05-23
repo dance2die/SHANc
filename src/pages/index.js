@@ -2,7 +2,7 @@ import React from 'react'
 import Link from 'gatsby-link'
 
 const IndexPage = ({ data }) => {
-  console.log(data)
+  // console.log(data)
   const stories = data.allTopStories.edges.map(({ node }, index) => {
     const { title, score, by, time, type, url } = node.item
     return (
