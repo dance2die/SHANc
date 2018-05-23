@@ -28,8 +28,8 @@ const linkStyle = {
 }
 
 const Header = ({ siteTitle, description }) => (
-  <HeaderContainer data-value="headerContainer">
-    <TitleContainer data-value="titleContainer">
+  <HeaderContainer>
+    <TitleContainer>
       <Title>
         <Link to="/" style={linkStyle}>
           {siteTitle}

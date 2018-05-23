@@ -27,10 +27,6 @@ const Meta = styled.div`
   font-size: 0.7rem;
 `
 
-// const Score = styled.span``
-
-// const Author = styled.span``
-
 const IndexPage = ({ data }) => {
   const stories = data.allTopStories.edges.map(({ node }, index) => {
     const { title, score, by, time, type, url } = node.item

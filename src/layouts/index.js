@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import Helmet from 'react-helmet'
 
 import Header from '../components/header'
+import BuildInfo from '../components/BuildInfo'
 import './index.css'
 
 const Layout = ({ children, data }) => (
@@ -18,6 +19,7 @@ const Layout = ({ children, data }) => (
       siteTitle={data.site.siteMetadata.title}
       description={data.site.siteMetadata.description}
     />
+    <BuildInfo />
     <div
       style={{
         margin: '0 auto',
