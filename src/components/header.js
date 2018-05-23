@@ -43,10 +43,24 @@ const BuildTime = styled.span`
 const BuildInfo = ({ metadata }) => {
   const { buildDate } = metadata
   const builtOn = new Date(buildDate * 1000)
+  // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleDateString
+  const localeOptions = {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    second: 'numeric',
+    timeZoneName: 'short',
+  }
+
   return (
     <Container>
       Generated {moment(builtOn).fromNow()}{' '}
-      <BuildTime>({builtOn.toUTCString()})</BuildTime>
+      <BuildTime>
+        ({builtOn.toLocaleDateString('en-US', localeOptions)})
+      </BuildTime>
     </Container>
   )
 }
