@@ -2,6 +2,7 @@ import React from 'react'
 import Link from 'gatsby-link'
 import styled from 'styled-components'
 import parser from 'url'
+import moment from 'moment'
 
 const Main = styled.div`
   margin: 0;
@@ -62,6 +63,7 @@ const IndexPage = ({ data }) => {
     const { title, score, by, time, type, url } = node.item
     const host = parser.parse(url || '').host
     const commentLink = `//news.ycombinator.com/item?id=${node.storyId}`
+    const ago = moment(new Date(time * 1000)).fromNow()
 
     return (
       <Story key={node.id}>
@@ -72,7 +74,7 @@ const IndexPage = ({ data }) => {
             <HostLink href={`//${host}`}>({host})</HostLink>
           </Body>
           <Meta>
-            {score} points by {by} ago...
+            {score} points by {by} {ago}
             <HostLink href={`${commentLink}`}>comments</HostLink>
           </Meta>
         </Content>
