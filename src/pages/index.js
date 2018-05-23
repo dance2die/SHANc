@@ -1,6 +1,7 @@
 import React from 'react'
 import Link from 'gatsby-link'
 import styled from 'styled-components'
+import parser from 'url'
 
 const Main = styled.div`
   margin: 0;
@@ -10,7 +11,7 @@ const Story = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  padding: 3px 0;
+  padding: 4px 0;
 `
 
 const Rank = styled.span`
@@ -18,25 +19,63 @@ const Rank = styled.span`
   width: 35px;
   margin-right: 10px;
   display: flex;
-  justify-content: flex-end;
+  justify-content: flex-start;
 `
 
-const TitleLink = ({ url, children }) => <a href={url}>{children}</a>
+const Content = styled.div``
+const Header = styled.div``
+const Body = styled.div``
 
 const Meta = styled.div`
   font-size: 0.7rem;
+  color: #828282;
+`
+
+const Host = Meta.extend``
+
+const BaseLink = styled.a`
+  &:link {
+    text-decoration: none;
+  }
+  &:hover {
+    text-decoration: underline;
+  }
+`
+
+const TitleLink = BaseLink.extend`
+  color: #464134;
+  cursor: pointer;
+`
+
+const HostLink = BaseLink.extend`
+  font-size: 0.7rem;
+  color: #828282;
+  margin-left: 5px;
+`
+
+const CommentLink = HostLink.extend`
+  margin: 0;
 `
 
 const IndexPage = ({ data }) => {
   const stories = data.allTopStories.edges.map(({ node }, index) => {
     const { title, score, by, time, type, url } = node.item
+    const host = parser.parse(url || '').host
+    const commentLink = `//news.ycombinator.com/item?id=${node.storyId}`
+
     return (
       <Story key={node.id}>
         <Rank>{index + 1}</Rank>
-        <TitleLink url={url}>{title}</TitleLink> -{' '}
-        <Meta>
-          {score} points by {by}
-        </Meta>
+        <Content>
+          <Body>
+            <TitleLink href={url}>{title}</TitleLink>
+            <HostLink href={`//${host}`}>({host})</HostLink>
+          </Body>
+          <Meta>
+            {score} points by {by} ago...
+            <HostLink href={`${commentLink}`}>comments</HostLink>
+          </Meta>
+        </Content>
       </Story>
     )
   })
