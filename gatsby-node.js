@@ -26,7 +26,7 @@ exports.sourceNodes = async ({ boundActionCreators }) => {
   const items = (await getItems(res.data)).map(res => res.data)
   const findItemById = storyId => {
     const result = items.find(item => item.id === storyId)
-    console.log(`findItemById(${storyId}) => ${result}`)
+    // console.log(`findItemById(${storyId}) => ${result}`)
     return result
   }
 
