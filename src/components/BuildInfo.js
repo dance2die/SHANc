@@ -8,9 +8,10 @@ const Container = styled.div`
   padding: 1.45rem 1.0875rem;
 `
 
-const BuildInfo = () => {
-  const now = new Date()
-  return <Container>Generated on {now.toUTCString()}</Container>
+const BuildInfo = ({ metadata }) => {
+  const { buildDate } = metadata
+  const builtOn = new Date(buildDate * 1000)
+  return <Container>Generated on {builtOn.toUTCString()}</Container>
 }
 
 export default BuildInfo

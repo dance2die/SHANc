@@ -19,7 +19,7 @@ const Layout = ({ children, data }) => (
       siteTitle={data.site.siteMetadata.title}
       description={data.site.siteMetadata.description}
     />
-    <BuildInfo />
+    <BuildInfo metadata={data.buildMetadata} />
     <div
       style={{
         margin: '0 auto',
@@ -40,12 +40,15 @@ Layout.propTypes = {
 export default Layout
 
 export const query = graphql`
-  query SiteTitleQuery {
+  query LayoutQuery {
     site {
       siteMetadata {
         title
         description
       }
+    }
+    buildMetadata {
+      buildDate
     }
   }
 `
