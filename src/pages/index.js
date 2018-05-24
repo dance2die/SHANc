@@ -44,7 +44,9 @@ const Meta = styled.div`
 
 const Host = Meta.extend``
 
-const BaseLink = styled.a`
+const BaseLink = styled.a.attrs({
+  target: '_blank',
+})`
   &:link {
     text-decoration: none;
   }
