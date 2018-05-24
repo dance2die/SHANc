@@ -1,26 +1,31 @@
-# gatsby-starter-default
-The default Gatsby starter.
+## 🚀 SHaNc - Static Hacker News clone
 
-For an overview of the project structure please refer to the [Gatsby documentation - Building with Components](https://www.gatsbyjs.org/docs/building-with-components/).
+### ❓ Why?
 
-## Install
+Because I want to skim through stories and be done with it.  
+I don't need up-to-date stories.
 
-Make sure that you have the Gatsby CLI program installed:
-```sh
-npm install --global gatsby-cli
-```
+### ⏲ How often does it refresh?
 
-And run from your CLI:
-```sh
-gatsby new gatsby-example-site
-```
+Every hour on the hour.
 
-Then you can run it by:
-```sh
-cd gatsby-example-site
-npm run develop
-```
+### ⚠️Note
 
-## Deploy
+Currently it only shows Top stories.  
+I will add "new" and "best" stories later on.
 
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/gatsbyjs/gatsby-starter-default)
+### 🔨 Technologies (and stuff...)
+
+* Static Site Generator: [Gatsby](https://www.gatsbyjs.org/)
+* [Styled Components](https://www.styled-components.com/)
+* Custom Hacker News GraphQL [source](https://github.com/dance2die/SHANc/blob/master/gatsby-node.js)
+  * Simply calls Official [HN API](https://github.com/HackerNews/API).
+* Server: [Netlify](https://www.netlify.com/)
+* Build Trigger: [Azure Functions](https://docs.microsoft.com/en-us/azure/azure-functions/) (PowerShell)
+  * Netlify exposes Build WebHook. Azure Functions written in PowerShell simply calls it with `Invoke-WebRequest` every hour
+* [GitHub Corners](https://github.com/tholman/github-corners) by [Tim Holman](http://tholman.com/)
+
+### 📐 Archiecture
+
+The awesome hand-drawn architecture
+![architecture](architecture.jpg)
