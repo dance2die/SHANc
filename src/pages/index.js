@@ -1,13 +1,14 @@
 import React from 'react'
 import Link from 'gatsby-link'
 import styled, { injectGlobal } from 'styled-components'
+import { OutboundLink } from 'gatsby-plugin-google-analytics'
+
 import parser from 'url'
 import moment from 'moment'
 
 injectGlobal`
   body {
     margin: 0;
-    /* font-family: 'Khula'; */
     font-family: 'Verdana';
     letter-spacing: 0.05rem;
   }
@@ -44,7 +45,9 @@ const Meta = styled.div`
 
 const Host = Meta.extend``
 
-const BaseLink = styled.a.attrs({
+// Use gatsby-plugin-google-analytics plugin to track outbound clicks
+// https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-analytics#outboundlink-component
+const BaseLink = styled(OutboundLink).attrs({
   target: '_blank',
 })`
   &:link {
@@ -54,7 +57,6 @@ const BaseLink = styled.a.attrs({
     text-decoration: underline;
   }
 `
-
 const TitleLink = BaseLink.extend`
   color: #464134;
   cursor: pointer;
