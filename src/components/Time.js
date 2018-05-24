@@ -9,7 +9,7 @@ class Time extends React.Component {
     super(props)
     const { date } = this.props
     const relativeTime = moment(date).fromNow()
-    const absoluteTime = `[${getLocaleDateString(date)}]`
+    const absoluteTime = `${getLocaleDateString(date)}`
 
     this.state = {
       relativeTime,

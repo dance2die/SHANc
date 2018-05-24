@@ -88,7 +88,7 @@ const IndexPage = ({ data }) => {
             <HostLink href={`//${host}`}>({host})</HostLink>
           </Body>
           <Meta>
-            {score} points by {by} <Time date={new Date(time * 1000)} />
+            {score} points by {by} [<Time date={new Date(time * 1000)} />]
             <HostLink href={`${commentLink}`}>[comments]</HostLink>
           </Meta>
         </Content>

@@ -45,7 +45,9 @@ const BuildInfo = ({ metadata }) => {
   const builtOn = new Date(buildDate * 1000)
   return (
     <BuildInfoContainer>
-      <Time date={builtOn} />
+      <span>
+        Generated <Time date={builtOn} />
+      </span>
     </BuildInfoContainer>
   )
 }
