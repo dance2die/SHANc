@@ -1,6 +1,6 @@
 module.exports = {
   siteMetadata: {
-    title: 'SHaNc - Static Hacker News clone',
+    title: 'SHaNc',
     description: 'Static Hacker News clone',
   },
   plugins: [
