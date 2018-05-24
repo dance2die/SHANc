@@ -1,11 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Helmet from 'react-helmet'
+import styled from 'styled-components'
 
 import Header from '../components/header'
 import BuildInfo from '../components/BuildInfo'
-// import './index.css'
-import styled from 'styled-components'
+import GithubCorner from '../components/GithubCorner'
 
 const Body = styled.div`
   margin: 0 auto;
@@ -31,6 +31,7 @@ const Layout = ({ children, data }) => (
       description={data.site.siteMetadata.description}
       metadata={data.buildMetadata}
     />
+    <GithubCorner />
     <Body>{children()}</Body>
   </div>
 )
