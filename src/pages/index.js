@@ -89,7 +89,7 @@ const IndexPage = ({ data }) => {
           </Body>
           <Meta>
             {score} points by {by} {ago}
-            <HostLink href={`${commentLink}`}>comments</HostLink>
+            <HostLink href={`${commentLink}`}>[comments]</HostLink>
           </Meta>
         </Content>
       </Story>
