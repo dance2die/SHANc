@@ -4,7 +4,8 @@ import styled, { injectGlobal } from 'styled-components'
 import { OutboundLink } from 'gatsby-plugin-google-analytics'
 
 import parser from 'url'
-import moment from 'moment'
+
+import Time from '../components/Time'
 
 injectGlobal`
   body {
@@ -77,7 +78,6 @@ const IndexPage = ({ data }) => {
     const { title, score, by, time, type, url } = node.item
     const host = parser.parse(url || '').host
     const commentLink = `//news.ycombinator.com/item?id=${node.storyId}`
-    const ago = moment(new Date(time * 1000)).fromNow()
 
     return (
       <Story key={node.id}>
@@ -88,7 +88,7 @@ const IndexPage = ({ data }) => {
             <HostLink href={`//${host}`}>({host})</HostLink>
           </Body>
           <Meta>
-            {score} points by {by} {ago}
+            {score} points by {by} <Time date={new Date(time * 1000)} />
             <HostLink href={`${commentLink}`}>[comments]</HostLink>
           </Meta>
         </Content>
