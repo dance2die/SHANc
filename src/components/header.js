@@ -40,35 +40,12 @@ const BuildInfoContainer = styled.div`
   flex-wrap: wrap;
 `
 
-const GenerateTime = styled.span`
-  margin-right: 5px;
-`
-const BuildTime = styled.span`
-  color: black;
-`
-
 const BuildInfo = ({ metadata }) => {
   const { buildDate } = metadata
   const builtOn = new Date(buildDate * 1000)
-  // // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleDateString
-  // const localeOptions = {
-  //   weekday: 'long',
-  //   year: 'numeric',
-  //   month: 'long',
-  //   day: 'numeric',
-  //   hour: 'numeric',
-  //   minute: 'numeric',
-  //   second: 'numeric',
-  //   timeZoneName: 'short',
-  // }
-
   return (
     <BuildInfoContainer>
       <Time date={builtOn} />
-      {/* <GenerateTime>Generated {moment(builtOn).fromNow()} </GenerateTime>
-      <BuildTime>
-        ({builtOn.toLocaleDateString('en-US', localeOptions)})
-      </BuildTime> */}
     </BuildInfoContainer>
   )
 }
