@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import moment from 'moment'
 
 import Time from './Time'
+import { getLocaleDateString } from '../util/Format'
 
 const HeaderContainer = styled.div`
   background: #ffc600;
@@ -46,7 +47,7 @@ const BuildInfo = ({ metadata }) => {
   return (
     <BuildInfoContainer>
       <span>
-        Generated <Time date={builtOn} />
+        Generated <Time date={builtOn} /> ({getLocaleDateString(builtOn)})
       </span>
     </BuildInfoContainer>
   )
