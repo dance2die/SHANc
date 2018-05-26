@@ -39,9 +39,16 @@ const createStoriesSource = async ({ createNode }) => {
 
   // Build item details map
   // for an O(1) look up for fetched item details
+  const map = new Map()
   const itemsMap = (await getItems(allStoryIds))
     .map(res => res.data)
-    .reduce((map, item) => map.set(item.id, item), new Map())
+    .reduce((_, item) => {
+      if (!item) {
+        console.log(item)
+        return
+      }
+      map.set(item.id, item)
+    })
 
   const createStoryNodes = (data, type) =>
     data.map((storyId, index) => {
@@ -52,7 +59,7 @@ const createStoriesSource = async ({ createNode }) => {
         internal: { type },
         children: [],
         storyId: storyId,
-        item: itemsMap.get(storyId),
+        item: map.get(storyId),
       }
 
       storyNode.internal.contentDigest = buildContentDigest(storyNode)

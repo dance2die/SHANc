@@ -6,7 +6,6 @@ import styled from 'styled-components'
 import Header from '../components/header'
 import BuildInfo from '../components/BuildInfo'
 import GithubCorner from '../components/GithubCorner'
-import Navigation from '../components/Navigation'
 
 const Body = styled.div`
   margin: 0 auto;
@@ -33,7 +32,6 @@ const Layout = ({ children, data }) => (
       metadata={data.buildMetadata}
     />
     <GithubCorner />
-    <Navigation />
     <Body>{children()}</Body>
   </div>
 )

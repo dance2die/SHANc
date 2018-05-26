@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import parser from 'url'
 
 import Time from '../components/Time'
+import Navigation from '../components/Navigation'
 
 const Main = styled.div`
   margin: 0;
@@ -72,29 +73,36 @@ const CommentLink = HostLink.extend`
 `
 
 const Stories = ({ stories, ...abc }) => {
-  const storiesComponents = stories.map(({ node }, index) => {
-    const { title, score, by, time, type, url } = node.item
-    const host = parser.parse(url || '').host
-    const commentLink = `//news.ycombinator.com/item?id=${node.storyId}`
-    const date = new Date(time * 1000)
+  const storiesComponents = stories
+    .filter(({ node }, index) => node.item !== null)
+    .map(({ node }, index) => {
+      const { title, score, by, time, type, url } = node.item
+      const host = parser.parse(url || '').host
+      const commentLink = `//news.ycombinator.com/item?id=${node.storyId}`
+      const date = new Date(time * 1000)
 
-    return (
-      <Story key={node.id}>
-        <Rank>{index + 1}</Rank>
-        <Content>
-          <Body>
-            <TitleLink href={url}>{title}</TitleLink>
-            <HostLink href={`//${host}`}>({host})</HostLink>
-          </Body>
-          <Meta>
-            {score} points by {by} [<Time date={date} />]
-            <HostLink href={`${commentLink}`}>[comments]</HostLink>
-          </Meta>
-        </Content>
-      </Story>
-    )
-  })
-  return <div>{storiesComponents}</div>
+      return (
+        <Story key={node.id}>
+          <Rank>{index + 1}</Rank>
+          <Content>
+            <Body>
+              <TitleLink href={url}>{title}</TitleLink>
+              <HostLink href={`//${host}`}>({host})</HostLink>
+            </Body>
+            <Meta>
+              {score} points by {by} [<Time date={date} />]
+              <HostLink href={`${commentLink}`}>[comments]</HostLink>
+            </Meta>
+          </Content>
+        </Story>
+      )
+    })
+  return (
+    <div>
+      <Navigation />
+      {storiesComponents}
+    </div>
+  )
 }
 
 export default Stories
