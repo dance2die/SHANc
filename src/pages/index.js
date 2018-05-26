@@ -63,6 +63,9 @@ const BaseLink = styled(OutboundLink).attrs({
   &:hover {
     text-decoration: underline;
   }
+  &:visited {
+    color: #ddd;
+  }
 `
 const TitleLink = BaseLink.extend`
   color: #464134;
