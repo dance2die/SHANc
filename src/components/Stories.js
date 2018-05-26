@@ -99,7 +99,7 @@ const Stories = ({ stories, ...abc }) => {
     })
   return (
     <div>
-      <Navigation />
+      {/* <Navigation /> */}
       {storiesComponents}
     </div>
   )
