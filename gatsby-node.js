@@ -12,45 +12,59 @@ const buildContentDigest = content =>
     .update(JSON.stringify(content))
     .digest(`hex`)
 
-const createTopStoriesSource = async ({ createNode }) => {
-  const res = await axios.get(
-    `https://hacker-news.firebaseio.com/v0/topstories.json`
-  )
+const topStoriesURL = `https://hacker-news.firebaseio.com/v0/topstories.json`
+const newStoriesURL = `https://hacker-news.firebaseio.com/v0/newstories.json`
+const bestStoriesURL = `https://hacker-news.firebaseio.com/v0/beststories.json`
+const itemURL = storyId =>
+  `https://hacker-news.firebaseio.com/v0/item/${storyId}.json`
+
+const createStoriesSource = async ({ createNode }) => {
+  const topResults = await axios.get(topStoriesURL)
+  const newResults = await axios.get(newStoriesURL)
+  const bestResults = await axios.get(bestStoriesURL)
 
   // Get story details
   const getItems = async storyIds => {
-    const itemsPromises = res.data.map(
-      async (storyId, index) =>
-        await axios.get(
-          `https://hacker-news.firebaseio.com/v0/item/${storyId}.json`
-        )
+    const itemsPromises = storyIds.map(
+      async (storyId, index) => await axios.get(itemURL(storyId))
     )
     return Promise.all(itemsPromises)
   }
 
+  // Combine all story IDs to get all items in one go for "itemsMap"
+  const allStoryIds = [
+    ...topResults.data,
+    ...newResults.data,
+    ...bestResults.data,
+  ]
+
   // Build item details map
   // for an O(1) look up for fetched item details
-  const itemsMap = (await getItems(res.data))
+  const itemsMap = (await getItems(allStoryIds))
     .map(res => res.data)
     .reduce((map, item) => map.set(item.id, item), new Map())
 
-  res.data.map((storyId, index) => {
-    const storyIdNode = {
-      id: `${index}`,
-      parent: null,
-      internal: {
-        type: `TopStories`,
-      },
-      children: [],
-      storyId: storyId,
-      item: itemsMap.get(storyId),
-    }
+  const createStoryNodes = (data, type) =>
+    data.map((storyId, index) => {
+      const id = `${type}-${storyId}`
+      const storyNode = {
+        id,
+        parent: null,
+        internal: { type },
+        children: [],
+        storyId: storyId,
+        item: itemsMap.get(storyId),
+      }
 
-    storyIdNode.internal.contentDigest = buildContentDigest(storyIdNode)
+      storyNode.internal.contentDigest = buildContentDigest(storyNode)
 
-    // Create node with the gatsby createNode() API
-    createNode(storyIdNode)
-  })
+      // Create node with the gatsby createNode() API
+      createNode(storyNode)
+    })
+
+  createStoryNodes(topResults.data, 'TopStories')
+  createStoryNodes(newResults.data, 'NewStories')
+  createStoryNodes(bestResults.data, 'BestStories')
 }
 
 const createBuildMetadataSource = ({ createNode }) => {
@@ -72,5 +86,5 @@ const createBuildMetadataSource = ({ createNode }) => {
 
 exports.sourceNodes = async ({ boundActionCreators }) => {
   await createBuildMetadataSource(boundActionCreators)
-  await createTopStoriesSource(boundActionCreators)
+  await createStoriesSource(boundActionCreators)
 }
