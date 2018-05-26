@@ -32,10 +32,9 @@ const createStoriesSource = async ({ createNode }) => {
   }
 
   // Combine all story IDs to get all items in one go for "itemsMap"
+  // We need only distant SET of IDs.
   const allStoryIds = [
-    ...topResults.data,
-    ...newResults.data,
-    ...bestResults.data,
+    ...new Set([...topResults.data, ...newResults.data, ...bestResults.data]),
   ]
 
   // Build item details map
