@@ -25,6 +25,12 @@ const Story = styled.div`
   justify-content: flex-start;
   padding: 4px 0;
   line-height: 18px;
+  /* Give each story more room */
+  margin-bottom: 0.5rem;
+
+  &:hover {
+    background-color: #ffc6001a;
+  }
 `
 
 const Rank = styled.span`
