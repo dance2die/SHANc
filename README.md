@@ -25,7 +25,7 @@ I will add "new" and "best" stories later on.
   * Netlify exposes Build WebHook. Azure Functions written in PowerShell simply calls it with `Invoke-WebRequest` every hour
 * [GitHub Corners](https://github.com/tholman/github-corners) by [Tim Holman](http://tholman.com/)
 
-### 📐 Archiecture
+### 📐 Architecture
 
 The awesome hand-drawn architecture
 ![architecture](architecture.jpg)
