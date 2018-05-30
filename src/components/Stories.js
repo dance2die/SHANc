@@ -79,6 +79,8 @@ const Stories = ({ stories, ...abc }) => {
       const { title, score, by, time, type, url } = node.item
       const host = parser.parse(url || '').host
       const commentLink = `//news.ycombinator.com/item?id=${node.storyId}`
+      // Some stories (Jobs, ASK, etc) don't have URLs then use comment URL
+      const titleUrl = url || commentLink
       const date = new Date(time * 1000)
 
       return (
@@ -86,7 +88,7 @@ const Stories = ({ stories, ...abc }) => {
           <Rank>{index + 1}</Rank>
           <Content>
             <Body>
-              <TitleLink href={url}>{title}</TitleLink>
+              <TitleLink href={titleUrl}>{title}</TitleLink>
               <HostLink href={`//${host}`}>({host})</HostLink>
             </Body>
             <Meta>
