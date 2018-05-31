@@ -83,10 +83,11 @@ const Stories = ({ stories, ...abc }) => {
       // Some stories (Jobs, ASK, etc) don't have URLs then use comment URL
       const titleUrl = url || commentLink
       const date = new Date(time * 1000)
+      const rank = (index + 1).toString().padStart(3, '0')
 
       return (
         <Story key={node.id}>
-          <Rank>{index + 1}</Rank>
+          <Rank>{rank}</Rank>
           <Content>
             <Body>
               <TitleLink href={titleUrl}>{title}</TitleLink>
