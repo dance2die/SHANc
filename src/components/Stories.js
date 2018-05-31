@@ -24,6 +24,7 @@ const Story = styled.div`
   }
 `
 const Rank = styled.span`
+  color: #ccc;
   font-size: 1.2rem;
   width: 35px;
   margin-right: 10px;
