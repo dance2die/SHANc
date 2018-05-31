@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { OutboundLink } from 'gatsby-plugin-google-analytics'
 import styled from 'styled-components'
+import { Switch } from 'smooth-ui'
 import parser from 'url'
 
 import Time from '../components/Time'
@@ -71,39 +72,98 @@ const HostLink = BaseLink.extend`
 const CommentLink = HostLink.extend`
   margin: 0;
 `
+const localStorageKey = 'Shanc_Stories_StoriesRead'
 
-const Stories = ({ stories, ...abc }) => {
-  const storiesComponents = stories
-    .filter(({ node }, index) => node.item !== null)
-    .map(({ node }, index) => {
-      const { title, score, by, time, type, url } = node.item
-      const host = parser.parse(url || '').host
-      const commentLink = `//news.ycombinator.com/item?id=${node.storyId}`
-      // Some stories (Jobs, ASK, etc) don't have URLs then use comment URL
-      const titleUrl = url || commentLink
-      const date = new Date(time * 1000)
+class Stories extends Component {
+  state = {
+    stories: this.props.stories,
+    hideReadStories: false,
+  }
 
-      return (
-        <Story key={node.id}>
-          <Rank>{index + 1}</Rank>
-          <Content>
-            <Body>
-              <TitleLink href={titleUrl}>{title}</TitleLink>
-              <HostLink href={`//${host}`}>({host})</HostLink>
-            </Body>
-            <Meta>
-              {score} points by {by} [<Time date={date} />]
-              <HostLink href={`${commentLink}`}>[comments]</HostLink>
-            </Meta>
-          </Content>
-        </Story>
-      )
+  buildStoriesComponents = stories => {
+    const readStories = this.getReadStories()
+    const filterReadStories = node =>
+      this.state.hideReadStories ? !readStories.has(node.storyId) : true
+
+    return stories
+      .filter(({ node }) => node.item !== null)
+      .filter(filterReadStories)
+      .map(({ node }, index) => {
+        const { title, score, by, time, type, url } = node.item
+        const host = parser.parse(url || '').host
+        const commentLink = `//news.ycombinator.com/item?id=${node.storyId}`
+        // Some stories (Jobs, ASK, etc) don't have URLs then use comment URL
+        const titleUrl = url || commentLink
+        const date = new Date(time * 1000)
+
+        return (
+          <Story key={node.id}>
+            <Rank>{index + 1}</Rank>
+            <Content>
+              <Body>
+                <TitleLink
+                  onClick={() => this.onTitleLinkClicked(node.storyId)}
+                  href={titleUrl}
+                >
+                  {title}
+                </TitleLink>
+                <HostLink href={`//${host}`}>({host})</HostLink>
+              </Body>
+              <Meta>
+                {score} points by {by} [<Time date={date} />]
+                <HostLink href={`${commentLink}`}>[comments]</HostLink>
+              </Meta>
+            </Content>
+          </Story>
+        )
+      })
+  }
+
+  getReadStories = () => {
+    const stories = localStorage.getItem(localStorageKey)
+    if (!stories) return []
+
+    return JSON.parse(stories)
+  }
+
+  // Save clicked stories in local storage as JavaScript cannot check for :visited property
+  onTitleLinkClicked = storyId => {
+    const storedStories = this.getReadStories()
+    storedStories.push(storyId)
+    localStorage.setItem(localStorageKey, JSON.stringify(storedStories))
+  }
+
+  onHideReadStoriesOptionClick = () => {
+    this.setState((prevState, props) => {
+      return { hideReadStories: !prevState.hideReadStories }
     })
+  }
+
+  render() {
+    const { stories } = this.state
+    const storiesComponents = this.buildStoriesComponents(stories)
+
+    return (
+      <div>
+        {/* <Navigation /> */}
+        <HideReadStoriesOption onClick={this.onHideReadStoriesOptionClick} />
+        {storiesComponents}
+      </div>
+    )
+  }
+}
+
+const HideReadStoriesOptionContainer = styled.div`
+  display: flex;
+  margin: 10px 0;
+`
+
+const HideReadStoriesOption = ({ onClick }) => {
   return (
-    <div>
-      {/* <Navigation /> */}
-      {storiesComponents}
-    </div>
+    <HideReadStoriesOptionContainer>
+      <span>Hide Read Stories: </span>
+      <Switch defaultChecked={false} onClick={_ => onClick()} />
+    </HideReadStoriesOptionContainer>
   )
 }
 
