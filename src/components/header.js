@@ -47,8 +47,9 @@ const BuildInfo = ({ metadata }) => {
   return (
     <BuildInfoContainer>
       <span>
-        Generated <Time date={builtOn} /> ({getLocaleDateString(builtOn)})
+        Generated <Time date={builtOn} />
       </span>
+      <span>({getLocaleDateString(builtOn)})</span>
     </BuildInfoContainer>
   )
 }
