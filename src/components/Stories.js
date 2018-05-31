@@ -30,6 +30,7 @@ const Rank = styled.span`
   margin-right: 10px;
   display: flex;
   justify-content: flex-start;
+  margin-right: 2rem;
 `
 
 const Content = styled.div``
