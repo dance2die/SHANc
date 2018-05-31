@@ -81,8 +81,8 @@ class Stories extends Component {
   }
 
   buildStoriesComponents = stories => {
-    const readStories = this.getReadStories()
-    const filterReadStories = node =>
+    const readStories = new Set(this.getReadStories())
+    const filterReadStories = ({ node }) =>
       this.state.hideReadStories ? !readStories.has(node.storyId) : true
 
     return stories
