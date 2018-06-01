@@ -1,7 +1,9 @@
 import React from 'react'
 import { OutboundLink } from 'gatsby-plugin-google-analytics'
 import styled from 'styled-components'
+import { Select } from 'smooth-ui'
 import parser from 'url'
+import moment from 'moment'
 
 import Time from '../components/Time'
 import Navigation from '../components/Navigation'
@@ -74,42 +76,104 @@ const CommentLink = HostLink.extend`
   margin: 0;
 `
 
-const Stories = ({ stories }) => {
-  const storiesComponents = stories
-    .filter(({ node }, index) => node.item !== null)
-    .map(({ node }, index) => {
-      const { title, score, by, time, type, url } = node.item
+const FilterByDateOption = ({ onChange }) => (
+  <div>
+    <span>Show Older Than </span>
+    <select onChange={onChange}>
+      <option key="0" value="0">
+        All
+      </option>
+      <option key="1" value="1">
+        A Day
+      </option>
+      <option key="2" value="2">
+        Two Days
+      </option>
+      <option key="3" value="3">
+        Three Days
+      </option>
+    </select>
+  </div>
+)
 
-      const commentLink = `//news.ycombinator.com/item?id=${node.storyId}`
-      const host = parser.parse(url || '').host
-      // Some stories (Jobs, ASK, etc) don't have URLs then use comment URL
-      const titleUrl = url || commentLink
+class Stories extends React.Component {
+  static SHOW_ALL_DATES = 0
+  static SECONDS_IN_MILLISECONDS = 1000
 
-      const date = new Date(time * 1000)
-      const rank = (index + 1).toString().padStart(3, '0')
+  state = {
+    stories: this.props.stories,
+    showDaysUpto: Stories.SHOW_ALL_DATES,
+  }
 
-      return (
-        <Story key={node.id}>
-          <Rank>{rank}</Rank>
-          <Content>
-            <Body>
-              <TitleLink href={titleUrl}>{title}</TitleLink>
-              {host ? <HostLink href={`//${host}`}>({host})</HostLink> : null}
-            </Body>
-            <Meta>
-              {score} points by {by} [<Time date={date} />]
-              <HostLink href={`${commentLink}`}>[comments]</HostLink>
-            </Meta>
-          </Content>
-        </Story>
+  // For filtering null node items while building stories
+  nullNodeItems = ({ node }) => node.item !== null
+
+  // For filtering by dates while building stories
+  byDates = ({ node }) => {
+    const { showDaysUpto } = this.state
+
+    if (showDaysUpto === 0) return true
+    else {
+      const postDate = moment(
+        new Date(node.item.time * Stories.SECONDS_IN_MILLISECONDS)
       )
-    })
-  return (
-    <div>
-      {/* <Navigation /> */}
-      {storiesComponents}
-    </div>
-  )
+      const prevDate = moment().add(showDaysUpto, 'days')
+      const olderBy = prevDate.diff(postDate, 'days')
+
+      return olderBy <= showDaysUpto + 1
+    }
+  }
+
+  buildStoriesComponents = () => {
+    const { stories } = this.state
+
+    return stories
+      .filter(this.nullNodeItems)
+      .filter(this.byDates)
+      .map(({ node }, index) => {
+        const { title, score, by, time, type, url } = node.item
+
+        const commentLink = `//news.ycombinator.com/item?id=${node.storyId}`
+        const host = parser.parse(url || '').host
+        // Some stories (Jobs, ASK, etc) don't have URLs then use comment URL
+        const titleUrl = url || commentLink
+
+        const date = new Date(time * Stories.SECONDS_IN_MILLISECONDS)
+        const rank = (index + 1).toString().padStart(3, '0')
+
+        return (
+          <Story key={node.id}>
+            <Rank>{rank}</Rank>
+            <Content>
+              <Body>
+                <TitleLink href={titleUrl}>{title}</TitleLink>
+                {host ? <HostLink href={`//${host}`}>({host})</HostLink> : null}
+              </Body>
+              <Meta>
+                {score} points by {by} [<Time date={date} />]
+                <HostLink href={`${commentLink}`}>[comments]</HostLink>
+              </Meta>
+            </Content>
+          </Story>
+        )
+      })
+  }
+
+  handleDateFilter = e => {
+    this.setState({ showDaysUpto: parseInt(e.target.value) })
+  }
+
+  render() {
+    const storiesComponents = this.buildStoriesComponents()
+
+    return (
+      <div>
+        {/* <Navigation /> */}
+        <FilterByDateOption onChange={this.handleDateFilter} />
+        {storiesComponents}
+      </div>
+    )
+  }
 }
 
 export default Stories
