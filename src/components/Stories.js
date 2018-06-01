@@ -74,15 +74,17 @@ const CommentLink = HostLink.extend`
   margin: 0;
 `
 
-const Stories = ({ stories, ...abc }) => {
+const Stories = ({ stories }) => {
   const storiesComponents = stories
     .filter(({ node }, index) => node.item !== null)
     .map(({ node }, index) => {
       const { title, score, by, time, type, url } = node.item
-      const host = parser.parse(url || '').host
+
       const commentLink = `//news.ycombinator.com/item?id=${node.storyId}`
+      const host = parser.parse(url || '').host
       // Some stories (Jobs, ASK, etc) don't have URLs then use comment URL
       const titleUrl = url || commentLink
+
       const date = new Date(time * 1000)
       const rank = (index + 1).toString().padStart(3, '0')
 
@@ -92,7 +94,7 @@ const Stories = ({ stories, ...abc }) => {
           <Content>
             <Body>
               <TitleLink href={titleUrl}>{title}</TitleLink>
-              <HostLink href={`//${host}`}>({host})</HostLink>
+              {host ? <HostLink href={`//${host}`}>({host})</HostLink> : null}
             </Body>
             <Meta>
               {score} points by {by} [<Time date={date} />]
