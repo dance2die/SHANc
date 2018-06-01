@@ -22,7 +22,7 @@ const Title = styled.h1`
   margin-bottom: 10px;
 `
 
-const DescriptionContainer = styled.p`
+const DescriptionContainer = styled.div`
   margin: 0;
   font-size: 1.1rem;
 `
