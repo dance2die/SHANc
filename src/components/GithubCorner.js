@@ -4,7 +4,7 @@ import styled from 'styled-components'
 const GithubLink = styled.a.attrs({
   href: 'https://github.com/dance2die/SHANc',
   target: '_blank',
-  class: 'github-corner',
+  className: 'github-corner',
 })``
 
 // http://tholman.com/github-corners/
