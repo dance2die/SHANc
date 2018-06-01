@@ -76,24 +76,41 @@ const CommentLink = HostLink.extend`
   margin: 0;
 `
 
+const FilterByDateContainer = styled.div`
+  margin-bottom: 15px;
+`
+
+const FilterByDateSelect = styled.select`
+  display: inline-block;
+  border-width: 1px;
+  border-color: rgb(222, 226, 230);
+  border-style: solid;
+  border-radius: 0.25rem;
+  padding: 0.175rem 1rem 0.175rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: rgb(33, 37, 41);
+`
+
 const FilterByDateOption = ({ onChange }) => (
-  <div>
-    <span>Show Older Than </span>
-    <select onChange={onChange}>
+  <FilterByDateContainer>
+    <span>Posted up to </span>
+    <FilterByDateSelect onChange={onChange}>
       <option key="0" value="0">
-        All
+        ∞
       </option>
       <option key="1" value="1">
-        A Day
+        A Day Ago
       </option>
       <option key="2" value="2">
-        Two Days
+        Two Days Ago
       </option>
       <option key="3" value="3">
-        Three Days
+        Three Days Ago
       </option>
-    </select>
-  </div>
+      <span> ago</span>
+    </FilterByDateSelect>
+  </FilterByDateContainer>
 )
 
 class Stories extends React.Component {
