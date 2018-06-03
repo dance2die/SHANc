@@ -116,6 +116,7 @@ const FilterByDateOption = ({ onChange }) => (
 class Stories extends React.Component {
   static SHOW_ALL_DATES = 0
   static SECONDS_IN_MILLISECONDS = 1000
+  static NOW = new Date()
 
   state = {
     stories: this.props.stories,
@@ -126,18 +127,26 @@ class Stories extends React.Component {
   nullNodeItems = ({ node }) => node.item !== null
 
   // For filtering by dates while building stories
-  byDates = ({ node }) => {
+  byDates = ({ node }, index) => {
     const { showDaysUpto } = this.state
 
     if (showDaysUpto === 0) return true
     else {
-      const postDate = moment(
-        new Date(node.item.time * Stories.SECONDS_IN_MILLISECONDS)
+      const postDate = new Date(
+        node.item.time * Stories.SECONDS_IN_MILLISECONDS
       )
-      const prevDate = moment().add(showDaysUpto, 'days')
-      const olderBy = prevDate.diff(postDate, 'days')
+      // const nowMoment = moment()
+      // const postMoment = moment(postDate)
+      // console.log('postMoment', postMoment.toString())
+      // console.log('nowMoment', nowMoment.toString())
 
-      return olderBy <= showDaysUpto + 1
+      // const hoursDifference = nowMoment.diff(postMoment, 'hours')
+      const hoursDifference = Math.abs(Stories.NOW - postDate) / 36e5
+      // console.log('===', node.item.title, index + 1)
+      // console.log('Stories.NOW, postDate', Stories.NOW, postDate)
+      // console.log('hoursDifference', hoursDifference)
+
+      return hoursDifference <= showDaysUpto * 24
     }
   }
 
