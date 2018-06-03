@@ -195,7 +195,7 @@ class Stories extends React.Component {
     return (
       <div>
         {/* <Navigation /> */}
-        <FilterByDateOption onChange={this.handleDateFilter} />
+        {/* <FilterByDateOption onChange={this.handleDateFilter} /> */}
         {storiesComponents}
       </div>
     )
