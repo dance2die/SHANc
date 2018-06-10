@@ -1,12 +1,10 @@
 import React from 'react'
 import { OutboundLink } from 'gatsby-plugin-google-analytics'
 import styled from 'styled-components'
-import { Select } from 'smooth-ui'
 import parser from 'url'
-import moment from 'moment'
 
 import Time from '../components/Time'
-import Navigation from '../components/Navigation'
+// import Navigation from '../components/Navigation'
 
 const Main = styled.div`
   margin: 0;
@@ -135,16 +133,7 @@ class Stories extends React.Component {
       const postDate = new Date(
         node.item.time * Stories.SECONDS_IN_MILLISECONDS
       )
-      // const nowMoment = moment()
-      // const postMoment = moment(postDate)
-      // console.log('postMoment', postMoment.toString())
-      // console.log('nowMoment', nowMoment.toString())
-
-      // const hoursDifference = nowMoment.diff(postMoment, 'hours')
       const hoursDifference = Math.abs(Stories.NOW - postDate) / 36e5
-      // console.log('===', node.item.title, index + 1)
-      // console.log('Stories.NOW, postDate', Stories.NOW, postDate)
-      // console.log('hoursDifference', hoursDifference)
 
       return hoursDifference <= showDaysUpto * 24
     }
