@@ -23,27 +23,25 @@ const createStoriesSource = async ({ createNode }) => {
   const newResults = await axios.get(newStoriesURL)
   const bestResults = await axios.get(bestStoriesURL)
 
-  // Get story details
-  const getItems = async storyIds => {
-    const itemsPromises = storyIds.map(
-      async (storyId, index) => await axios.get(itemURL(storyId))
-    )
-    return Promise.all(itemsPromises)
-  }
-
-  // Combine all story IDs to get all items in one go for "itemsMap"
-  // We need only distant SET of IDs.
-  const allStoryIds = [
+  // Combine all story IDs to get all items in one go for "items" map
+  // We need only distinct SET of IDs.
+  const storyIds = [
     ...new Set([...topResults.data, ...newResults.data, ...bestResults.data]),
   ]
 
+  const getStories = async storyIds => {
+    const stories = storyIds.map(storyId => axios.get(itemURL(storyId)))
+    return Promise.all(stories)
+  }
+
   // Build item details map
   // for an O(1) look up for fetched item details
-  const map = (await getItems(allStoryIds))
+  const items = (await getStories(storyIds))
     .map(res => res.data)
     .filter(item => item !== null)
     .reduce((acc, item) => acc.set(item.id, item), new Map())
 
+  // Expose a hacker new story available for GraphQL query
   const createStoryNodes = (data, type) =>
     data.map((storyId, index) => {
       const id = `${type}-${storyId}`
@@ -53,12 +51,11 @@ const createStoriesSource = async ({ createNode }) => {
         internal: { type },
         children: [],
         storyId: storyId,
-        item: map.get(storyId),
+        item: items.get(storyId),
       }
 
       storyNode.internal.contentDigest = buildContentDigest(storyNode)
 
-      // Create node with the gatsby createNode() API
       createNode(storyNode)
     })
 
