@@ -39,16 +39,10 @@ const createStoriesSource = async ({ createNode }) => {
 
   // Build item details map
   // for an O(1) look up for fetched item details
-  const map = new Map()
-  const itemsMap = (await getItems(allStoryIds))
+  const map = (await getItems(allStoryIds))
     .map(res => res.data)
-    .reduce((_, item) => {
-      if (!item) {
-        console.log(item)
-        return
-      }
-      map.set(item.id, item)
-    })
+    .filter(item => item !== null)
+    .reduce((acc, item) => acc.set(item.id, item), new Map())
 
   const createStoryNodes = (data, type) =>
     data.map((storyId, index) => {
