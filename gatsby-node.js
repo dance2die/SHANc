@@ -12,13 +12,13 @@ const buildContentDigest = content =>
     .update(JSON.stringify(content))
     .digest(`hex`)
 
-const topStoriesURL = `https://hacker-news.firebaseio.com/v0/topstories.json`
-const newStoriesURL = `https://hacker-news.firebaseio.com/v0/newstories.json`
-const bestStoriesURL = `https://hacker-news.firebaseio.com/v0/beststories.json`
-const itemURL = storyId =>
-  `https://hacker-news.firebaseio.com/v0/item/${storyId}.json`
-
 const createStoriesSource = async ({ createNode }) => {
+  const topStoriesURL = `https://hacker-news.firebaseio.com/v0/topstories.json`
+  const newStoriesURL = `https://hacker-news.firebaseio.com/v0/newstories.json`
+  const bestStoriesURL = `https://hacker-news.firebaseio.com/v0/beststories.json`
+  const getItemURL = storyId =>
+    `https://hacker-news.firebaseio.com/v0/item/${storyId}.json`
+
   const topResults = await axios.get(topStoriesURL)
   const newResults = await axios.get(newStoriesURL)
   const bestResults = await axios.get(bestStoriesURL)
@@ -30,7 +30,7 @@ const createStoriesSource = async ({ createNode }) => {
   ]
 
   const getStories = async storyIds => {
-    const stories = storyIds.map(storyId => axios.get(itemURL(storyId)))
+    const stories = storyIds.map(storyId => axios.get(getItemURL(storyId)))
     return Promise.all(stories)
   }
 
@@ -43,7 +43,7 @@ const createStoriesSource = async ({ createNode }) => {
 
   // Expose a hacker new story available for GraphQL query
   const createStoryNodes = (data, type) =>
-    data.map((storyId, index) => {
+    data.map(storyId => {
       const id = `${type}-${storyId}`
       const storyNode = {
         id,
