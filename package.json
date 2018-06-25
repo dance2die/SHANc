@@ -33,6 +33,6 @@
     "lint": "eslint ."
   },
   "devDependencies": {
-    "prettier": "^1.12.0"
+    "prettier": "^1.13.5"
   }
 }
