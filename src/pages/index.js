@@ -3,6 +3,7 @@ import { graphql } from 'gatsby'
 import { createGlobalStyle } from 'styled-components'
 
 import Stories from '../components/Stories'
+import Layout from '../layouts'
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -13,10 +14,10 @@ const GlobalStyle = createGlobalStyle`
 `
 
 const IndexPage = ({ data }) => (
-  <>
+  <Layout>
     <GlobalStyle />
     <Stories stories={data.allTopStories.edges} title="Top Stories" />
-  </>
+  </Layout>
 )
 
 export default IndexPage

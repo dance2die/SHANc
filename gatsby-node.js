@@ -81,7 +81,7 @@ const createBuildMetadataSource = ({ createNode }) => {
   createNode(buildMetadataNode)
 }
 
-exports.sourceNodes = async ({ boundActionCreators }) => {
-  await createBuildMetadataSource(boundActionCreators)
-  await createStoriesSource(boundActionCreators)
+exports.sourceNodes = async ({ actions }) => {
+  await createBuildMetadataSource(actions)
+  await createStoriesSource(actions)
 }

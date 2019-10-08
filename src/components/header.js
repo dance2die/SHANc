@@ -1,7 +1,6 @@
 import React from 'react'
 import Link from 'gatsby-link'
 import styled from 'styled-components'
-import moment from 'moment'
 
 import Time from './Time'
 import { getLocaleDateString } from '../util/Format'
