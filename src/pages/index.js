@@ -3,7 +3,7 @@ import { graphql } from 'gatsby'
 import { createGlobalStyle } from 'styled-components'
 
 import Stories from '../components/Stories'
-import Layout from '../layouts'
+import Layout from '../components/layout'
 
 const GlobalStyle = createGlobalStyle`
   body {
