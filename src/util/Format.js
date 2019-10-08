@@ -1,5 +1,4 @@
 const getLocaleDateString = date => {
-  const locales = 'en-US'
   // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleDateString
   const localeOptions = {
     weekday: 'long',

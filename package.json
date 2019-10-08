@@ -4,22 +4,24 @@
   "version": "1.1.0",
   "author": "Sung Kim",
   "dependencies": {
-    "axios": "^0.18.0",
-    "babel-eslint": "^8.2.3",
-    "eslint": "^4.19.1",
-    "eslint-plugin-react": "^7.8.2",
-    "gatsby": "^1.9.247",
-    "gatsby-cli": "^1.1.58",
-    "gatsby-link": "^1.6.40",
-    "gatsby-plugin-favicon": "^2.1.1",
-    "gatsby-plugin-google-analytics": "^1.0.31",
-    "gatsby-plugin-react-helmet": "^2.0.10",
-    "gatsby-plugin-styled-components": "^2.0.11",
-    "moment": "^2.22.1",
-    "react-helmet": "^5.2.0",
-    "react-router-dom": "^4.2.2",
-    "smooth-ui": "^4.2.0",
-    "styled-components": "^3.2.6",
+    "axios": "^0.19.0",
+    "babel-eslint": "^10.0.3",
+    "eslint": "^6.5.1",
+    "eslint-plugin-react": "^7.16.0",
+    "gatsby": "^2.15.33",
+    "gatsby-cli": "^2.7.56",
+    "gatsby-link": "^2.2.18",
+    "gatsby-plugin-favicon": "^3.1.6",
+    "gatsby-plugin-google-analytics": "^2.1.20",
+    "gatsby-plugin-react-helmet": "^3.1.10",
+    "gatsby-plugin-styled-components": "^3.1.8",
+    "moment": "^2.24.0",
+    "react": "^16.10.2",
+    "react-dom": "^16.10.2",
+    "react-helmet": "^5.2.1",
+    "react-router-dom": "^5.1.2",
+    "smooth-ui": "^4.3.2",
+    "styled-components": "^4.4.0",
     "url": "^0.11.0"
   },
   "keywords": [
@@ -33,6 +35,6 @@
     "lint": "eslint ."
   },
   "devDependencies": {
-    "prettier": "^1.12.0"
+    "prettier": "^1.18.2"
   }
 }

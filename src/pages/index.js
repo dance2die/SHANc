@@ -1,11 +1,10 @@
 import React from 'react'
-import Link from 'gatsby-link'
-import styled, { injectGlobal } from 'styled-components'
-import { BrowserRouter, Switch, Route } from 'react-router-dom'
+import { graphql } from 'gatsby'
+import { createGlobalStyle } from 'styled-components'
 
 import Stories from '../components/Stories'
 
-injectGlobal`
+const GlobalStyle = createGlobalStyle`
   body {
     margin: 0;
     font-family: 'Verdana';
@@ -14,7 +13,10 @@ injectGlobal`
 `
 
 const IndexPage = ({ data }) => (
-  <Stories stories={data.allTopStories.edges} title="Top Stories" />
+  <>
+    <GlobalStyle />
+    <Stories stories={data.allTopStories.edges} title="Top Stories" />
+  </>
 )
 
 export default IndexPage

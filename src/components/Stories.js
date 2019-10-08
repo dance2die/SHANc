@@ -4,11 +4,6 @@ import styled from 'styled-components'
 import parser from 'url'
 
 import Time from '../components/Time'
-// import Navigation from '../components/Navigation'
-
-const Main = styled.div`
-  margin: 0;
-`
 
 const Story = styled.div`
   display: flex;
@@ -34,15 +29,12 @@ const Rank = styled.span`
 `
 
 const Content = styled.div``
-const Header = styled.div``
 const Body = styled.div``
 
 const Meta = styled.div`
   font-size: 0.7rem;
   color: #828282;
 `
-
-const Host = Meta.extend``
 
 // Use gatsby-plugin-google-analytics plugin to track outbound clicks
 // https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-plugin-google-analytics#outboundlink-component
@@ -59,57 +51,16 @@ const BaseLink = styled(OutboundLink).attrs({
     color: #ddd;
   }
 `
-const TitleLink = BaseLink.extend`
+const TitleLink = styled(BaseLink)`
   color: #464134;
   cursor: pointer;
 `
 
-const HostLink = BaseLink.extend`
+const HostLink = styled(BaseLink)`
   font-size: 0.7rem;
   color: #828282;
   margin-left: 5px;
 `
-
-const CommentLink = HostLink.extend`
-  margin: 0;
-`
-
-const FilterByDateContainer = styled.div`
-  margin-bottom: 15px;
-`
-
-const FilterByDateSelect = styled.select`
-  display: inline-block;
-  border-width: 1px;
-  border-color: rgb(222, 226, 230);
-  border-style: solid;
-  border-radius: 0.25rem;
-  padding: 0.175rem 1rem 0.175rem 0.75rem;
-  font-size: 1rem;
-  line-height: 1.5;
-  color: rgb(33, 37, 41);
-`
-
-const FilterByDateOption = ({ onChange }) => (
-  <FilterByDateContainer>
-    <span>Posted up to </span>
-    <FilterByDateSelect onChange={onChange}>
-      <option key="0" value="0">
-        ∞
-      </option>
-      <option key="1" value="1">
-        A Day Ago
-      </option>
-      <option key="2" value="2">
-        Two Days Ago
-      </option>
-      <option key="3" value="3">
-        Three Days Ago
-      </option>
-      <span> ago</span>
-    </FilterByDateSelect>
-  </FilterByDateContainer>
-)
 
 class Stories extends React.Component {
   static SHOW_ALL_DATES = 0
@@ -146,7 +97,7 @@ class Stories extends React.Component {
       .filter(this.nullNodeItems)
       .filter(this.byDates)
       .map(({ node }, index) => {
-        const { title, score, by, time, type, url } = node.item
+        const { title, score, by, time, url } = node.item
 
         const commentLink = `//news.ycombinator.com/item?id=${node.storyId}`
         const host = parser.parse(url || '').host
@@ -181,13 +132,7 @@ class Stories extends React.Component {
   render() {
     const storiesComponents = this.buildStoriesComponents()
 
-    return (
-      <div>
-        {/* <Navigation /> */}
-        {/* <FilterByDateOption onChange={this.handleDateFilter} /> */}
-        {storiesComponents}
-      </div>
-    )
+    return <div>{storiesComponents}</div>
   }
 }
 
