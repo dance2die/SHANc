@@ -1,0 +1,29 @@
+name: Build and Deploy to Gatsby every hour
+
+# https://help.github.com/en/actions/automating-your-workflow-with-github-actions/configuring-a-workflow#triggering-a-workflow-with-events
+on:
+  schedule:
+    - cron: '0 */2 * * *'
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    # https://github.com/actions/setup-node#usage
+    - uses: actions/setup-node@v1
+      with:
+        node-version: '12.x'
+    - run: npm install
+    - run: npm run build
+    # Deploy the gatsby build to Netlify
+    #- run: npx netlify-cli deploy --dir=public --prod
+    # https://github.com/netlify/actions/blob/master/cli/README.md
+    - uses: netlify/actions/cli@master
+      with:
+        # https://help.github.com/en/actions/automating-your-workflow-with-github-actions/workflow-syntax-for-github-actions#jobsjob_idstepswithargs
+        args: deploy --dir=public --prod
+        secrets: NETLIFY_AUTH_TOKEN
+    
