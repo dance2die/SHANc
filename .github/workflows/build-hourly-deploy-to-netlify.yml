@@ -21,7 +21,10 @@ jobs:
     #- run: npx netlify-cli deploy --dir=public --prod
     # https://github.com/netlify/actions/blob/master/cli/README.md
     - uses: netlify/actions/cli@master
+      env:
+        NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+        NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
       with:
         # https://help.github.com/en/actions/automating-your-workflow-with-github-actions/workflow-syntax-for-github-actions#jobsjob_idstepswithargs
         args: deploy --dir=public --prod
-        secrets: ${{ secrets.NETLIFY_AUTH_TOKEN }}, ${{ secrets.NETLIFY_SITE_ID }}
+        secrets: '["NETLIFY_AUTH_TOKEN", "NETLIFY_SITE_ID"]'
