@@ -1,10 +1,14 @@
 name: Build and Deploy to Gatsby every hour
 
 # https://help.github.com/en/actions/automating-your-workflow-with-github-actions/configuring-a-workflow#triggering-a-workflow-with-events
+# on:
+#   schedule:
+#     - cron: '0 */2 * * *'
 on:
-  schedule:
-    - cron: '0 */2 * * *'
-
+  push:
+    branches:
+      - master
+        
 jobs:
   build:
     runs-on: ubuntu-latest
