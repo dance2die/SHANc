@@ -1,9 +1,9 @@
-name: Build and Deploy Gatsby to Netlify every hour
+name: Build and Deploy Gatsby to Netlify every 3 hours
 
 # https://help.github.com/en/actions/automating-your-workflow-with-github-actions/configuring-a-workflow#triggering-a-workflow-with-events
 on:
   schedule:
-    - cron: '0 */1 * * *'
+    - cron: '0 */3 * * *'
 # on:
 #   push:
 #     branches:
