@@ -6,7 +6,8 @@ import Time from './Time'
 import { getLocaleDateString } from '../util/Format'
 
 const HeaderContainer = styled.div`
-  background: #ffc600;
+  /* background: #ffc600; */
+  background-image: linear-gradient(to right top, #ffc600, #ff9d1a, #ff7335, #f5494a, #db1f5d);
   font-size: 1.5rem;
   margin-bottom: 15px;
 `
