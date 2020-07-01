@@ -7,7 +7,7 @@
     "axios": "^0.19.2",
     "babel-eslint": "^10.1.0",
     "eslint": "^6.8.0",
-    "eslint-plugin-react": "^7.19.0",
+    "eslint-plugin-react": "^7.20.3",
     "gatsby": "^2.21.9",
     "gatsby-cli": "^2.12.7",
     "gatsby-link": "^2.4.0",
