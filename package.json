@@ -21,7 +21,7 @@
     "react-helmet": "^6.0.0",
     "react-router-dom": "^5.1.2",
     "smooth-ui": "^4.3.2",
-    "styled-components": "^5.1.0",
+    "styled-components": "^5.2.0",
     "url": "^0.11.0"
   },
   "keywords": [
