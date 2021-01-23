@@ -25,6 +25,9 @@ jobs:
       - name: Install packages
         run: yarn install
 
+      - name: Build the site
+        run: yarn build
+
       # Deploy the gatsby build to Netlify
       #- run: npx netlify-cli deploy --dir=public --prod
       # https://github.com/netlify/actions/blob/master/cli/README.md
